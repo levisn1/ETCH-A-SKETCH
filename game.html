@@ -1,0 +1,76 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Etch-a-sketch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="maincontainer">
+  </div>
+  <div id="controls">
+    <button id="reset-button">Reset</button>
+    <button id="change_grid-button">ChangeGrid</button>
+    <button id="rainbow-button">Rainbow</button>
+  </div>
+</body>
+<script>
+
+  const maincontainer = document.getElementById('maincontainer');
+  const reset = document.querySelector('#reset-button');
+  const grid = document.querySelector('#change_grid-button');
+  const rainbow = document.querySelector('#rainbow-button');
+  let divs = 0;
+  let div = 0;
+  let i = 0;
+
+  grid.addEventListener('click', getInitialGrid);
+  reset.addEventListener('click', resetGrid);
+  rainbow.addEventListener('click', setRainbowGrid);
+
+  function getInitialGrid() {
+    resetGrid();
+    let gridUserChoice = prompt('What is the size of the grid you want to create?');
+    if (gridUserChoice > 64) {
+      alert('Insert a number between 1-64');
+      getInitialGrid()
+    }
+    getGridGenerator(gridUserChoice);
+  }
+
+  function getGridGenerator(num) {
+    for (i = 1 ; i <= (num * num); i++) {
+      div = document.createElement('div');
+      maincontainer.appendChild(div);
+    }
+    document.getElementById('maincontainer').setAttribute('style', `grid-template-columns: repeat(${num}, 1fr); grid-template-rows: repeat(${num}, 1fr);`);
+    divs = document.querySelectorAll('#maincontainer > div');
+    divs.forEach((div) => {
+      div.classList.add('block');
+      div.addEventListener('mouseover', hover);
+    });
+  }
+
+  function hover(e){
+    e.target.style.background = 'red';
+  }
+
+  function setRainbowGrid(){
+    div.removeEventListener('mouseover', hover);
+    divs.forEach((div) => {
+      div.addEventListener('mouseover', getRainbowHover);
+    });
+  }
+
+  function getRainbowHover(e) {
+    colors = ['red','orange','blue','green','pink','yellow']
+    e.target.style.background = colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function resetGrid() {
+    maincontainer.removeAttribute('style');
+    while (maincontainer.firstChild) {
+      maincontainer.removeChild(maincontainer.firstChild);
+    }
+  }
+</script>
+</html>
