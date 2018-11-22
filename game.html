@@ -43,7 +43,7 @@
       maincontainer.appendChild(div);
     }
     document.getElementById('maincontainer').setAttribute('style', `grid-template-columns: repeat(${num}, 1fr); grid-template-rows: repeat(${num}, 1fr);`);
-    divs = document.querySelectorAll('#maincontainer > div');
+    divs = document.querySelectorAll('#maincontainer div');
     divs.forEach((div) => {
       div.classList.add('block');
       div.addEventListener('mouseover', hover);
